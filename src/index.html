@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script src="https://unpkg.com/htmx.org/dist/htmx.js"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
+    <title>Demo Chat</title>
+  </head>
+  <body hx-boost="true">
+    <section>
+      <div id="chat_room" hx-ext="ws" ws-connect="/chatroom">
+        <div>
+          <h2>Chat room</h2>
+          <p>
+            Users online:
+            <span id="online_count"></span>
+          </p>
+        </div>
+        <div id="chat_messages"></div>
+        <form id="chat_form" ws-send hx-on:submit="this.reset()">
+          <input
+            type="text"
+            id="chat_input"
+            placeholder="Type your message here"
+            name="message"
+          />
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </section>
+  </body>
+</html>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body > section {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    margin: 0 auto;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  #chat_room {
+    font-family: "Helvetica Neue", sans-serif;
+    color: #444;
+    width: 100%;
+    max-width: 360px;
+    height: 100vh;
+    max-height: 720px;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #chat_room > div:first-child {
+    display: flex;
+    flex-direction: column;
+    background-color: #075e54;
+    color: white;
+    padding: 15px;
+  }
+
+  #online_count {
+    font-weight: bold;
+  }
+
+  #chat_messages {
+    display: flex;
+    flex-direction: column-reverse;
+    height: 100%;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #ece5dd;
+    gap: 10px;
+  }
+
+  #chat_form {
+    display: flex;
+    border-top: 1px solid #ddd;
+    background-color: white;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  #chat_input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+  }
+
+  #chat_form button {
+    background-color: #075e54;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+
+  #chat_form button:hover {
+    background-color: #064c43;
+  }
+
+  .chatMessage {
+    min-width: 40%;
+    max-width: 60%;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    font-family: "Helvetica Neue", sans-serif;
+  }
+
+  .localMessage {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+  }
+
+  .remoteMessage {
+    background-color: #fff;
+    align-self: flex-start;
+  }
+
+  .chatMessage b {
+    font-weight: bold;
+    color: #075e54;
+  }
+
+  .chatMessage span {
+    float: right;
+    color: #666;
+    font-size: 0.8em;
+  }
+
+  .chatMessage p {
+    color: #000;
+  }
+  .userJoin {
+    background-color: #e2e2e2;
+    color: #555;
+    padding: 8px 10px;
+    margin: 5px auto;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 0.9em;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    max-width: 80%;
+  }
+  .userLeave {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 8px 10px;
+    margin: 5px auto;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 0.9em;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    max-width: 80%;
+  }
+</style>
