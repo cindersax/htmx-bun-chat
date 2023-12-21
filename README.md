@@ -26,7 +26,7 @@ Demo-Chat is a web-based chatroom application using Bun and HTMX, featuring real
 
 ### Installation
 
-1. **Clone the Repository**: `git clone [repository-url]`.
+1. **Clone the Repository**: `git clone https://github.com/cindersax/htmx-bun-chat`.
 2. **Enter the Project Directory**: `cd demo-chat`.
 3. **Install Dependencies**: `bun install` to get started.
 
